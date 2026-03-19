@@ -1,0 +1,164 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px 0;
+  z-index: 1000;
+  transition: var(--transition);
+  background-color: transparent;
+}
+
+.header.scrolled {
+  background-color: var(--bg-color);
+  padding: 16px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: var(--secondary-color);
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 32px;
+}
+
+.main-nav a {
+  font-weight: 500;
+  color: var(--text-dark);
+  transition: var(--transition);
+  position: relative;
+  font-size: 0.95rem;
+}
+
+/* Fix text color when header is not scrolled and overlaying dark hero background */
+/* We will assume the hero has a light background for now, or we manage it with text shadows. Let's stick to standard colors */
+
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  transition: width 0.3s ease;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+.main-nav a:hover {
+  color: var(--primary-color);
+}
+
+@media (min-width: 993px) {
+  .mobile-menu-btn, .mobile-actions {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .header-actions {
+    display: none;
+  }
+  
+  .main-nav ul {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+    z-index: 1001;
+    width: 30px;
+    height: 24px;
+    position: relative;
+  }
+  
+  .hamburger {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: var(--transition);
+  }
+  
+  .header.scrolled .hamburger {
+    background-color: var(--text-dark);
+  }
+  
+  .hamburger::before, .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: inherit; /* inherit from hamburger */
+    transition: var(--transition);
+    left: 0;
+  }
+  
+  .hamburger::before { top: -8px; }
+  .hamburger::after { bottom: -8px; }
+  
+  .hamburger.active { background-color: transparent !important; }
+  .hamburger.active::before { 
+    top: 0; 
+    transform: rotate(45deg); 
+    background-color: var(--text-dark);
+  }
+  .hamburger.active::after { 
+    bottom: 0; 
+    transform: rotate(-45deg); 
+    background-color: var(--text-dark);
+  }
+  
+  .main-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: var(--bg-color);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 100px 30px 30px;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+  }
+  
+  .main-nav.open {
+    right: 0;
+  }
+  
+  .mobile-actions {
+    display: block;
+    margin-top: auto;
+  }
+  
+  .mobile-actions .btn {
+    width: 100%;
+  }
+}
